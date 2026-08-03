@@ -27,7 +27,7 @@ function App() {
               <p className="text-uppercase fw-semibold text-primary mb-2">OctoFit Tracker</p>
               <h1 className="h3 fw-bold mb-3">Multi-tier fitness experience</h1>
               <p className="text-muted">
-                Define <code>VITE_CODESPACE_NAME</code> in <code>.env.local</code> for Codespaces URLs, or leave it unset to use localhost.
+                Define <code>VITE_CODESPACE_NAME</code> in <code>.env.local</code> for Codespaces URLs; leave it unset to use localhost.
               </p>
               <div className="d-grid gap-2 mt-4">
                 {navItems.map((item) => (
