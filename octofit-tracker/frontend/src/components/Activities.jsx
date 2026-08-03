@@ -1,5 +1,21 @@
 import { useEffect, useState } from 'react';
-import { fetchJson } from './api';
+
+const getActivitiesEndpoint = () => {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+    : 'http://localhost:8000/api/activities/';
+};
+
+const normalizeActivities = (payload) => {
+  if (Array.isArray(payload)) return payload;
+  if (!payload || typeof payload !== 'object') return [];
+  if (Array.isArray(payload.activities)) return payload.activities;
+  if (Array.isArray(payload.data)) return payload.data;
+  if (Array.isArray(payload.results)) return payload.results;
+  if (Array.isArray(payload.items)) return payload.items;
+  return [];
+};
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -8,8 +24,10 @@ function Activities() {
   useEffect(() => {
     const loadActivities = async () => {
       try {
-        const data = await fetchJson('activities', 'activities');
-        setActivities(data);
+        const response = await fetch(getActivitiesEndpoint(), { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+        const data = await response.json();
+        setActivities(normalizeActivities(data));
       } catch (err) {
         setError(err.message);
       }

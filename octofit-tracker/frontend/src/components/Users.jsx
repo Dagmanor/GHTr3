@@ -1,5 +1,21 @@
 import { useEffect, useState } from 'react';
-import { fetchJson } from './api';
+
+const getUsersEndpoint = () => {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/users/`
+    : 'http://localhost:8000/api/users/';
+};
+
+const normalizeUsers = (payload) => {
+  if (Array.isArray(payload)) return payload;
+  if (!payload || typeof payload !== 'object') return [];
+  if (Array.isArray(payload.users)) return payload.users;
+  if (Array.isArray(payload.data)) return payload.data;
+  if (Array.isArray(payload.results)) return payload.results;
+  if (Array.isArray(payload.items)) return payload.items;
+  return [];
+};
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -8,8 +24,10 @@ function Users() {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const data = await fetchJson('users', 'users');
-        setUsers(data);
+        const response = await fetch(getUsersEndpoint(), { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+        const data = await response.json();
+        setUsers(normalizeUsers(data));
       } catch (err) {
         setError(err.message);
       }
