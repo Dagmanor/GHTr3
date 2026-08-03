@@ -22,49 +22,34 @@ app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok', service: 'octofit-backend', baseUrl: apiBaseUrl });
 });
 app.get('/api/users', (_req, res) => {
-    res.json({
-        baseUrl: apiBaseUrl,
-        users: [
-            { id: 1, name: 'Ava', role: 'captain' },
-            { id: 2, name: 'Noah', role: 'member' },
-        ],
-    });
+    res.json([
+        { id: 1, name: 'Ava', role: 'captain' },
+        { id: 2, name: 'Noah', role: 'member' },
+    ]);
 });
 app.get('/api/teams', (_req, res) => {
-    res.json({
-        baseUrl: apiBaseUrl,
-        teams: [
-            { id: 1, name: 'Velocity', description: 'High-energy group training' },
-            { id: 2, name: 'Endurance', description: 'Long-distance and recovery focus' },
-        ],
-    });
+    res.json([
+        { id: 1, name: 'Velocity', description: 'High-energy group training' },
+        { id: 2, name: 'Endurance', description: 'Long-distance and recovery focus' },
+    ]);
 });
 app.get('/api/activities', (_req, res) => {
-    res.json({
-        baseUrl: apiBaseUrl,
-        activities: [
-            { id: 1, type: 'run', durationMinutes: 30, calories: 320 },
-            { id: 2, type: 'strength', durationMinutes: 45, calories: 260 },
-        ],
-    });
+    res.json([
+        { id: 1, type: 'run', durationMinutes: 30, calories: 320 },
+        { id: 2, type: 'strength', durationMinutes: 45, calories: 260 },
+    ]);
 });
 app.get('/api/workouts', (_req, res) => {
-    res.json({
-        baseUrl: apiBaseUrl,
-        workouts: [
-            { id: 1, name: 'Morning HIIT', description: 'Short high-intensity interval training' },
-            { id: 2, name: 'Strength Builder', description: 'Full-body strength circuit' },
-        ],
-    });
+    res.json([
+        { id: 1, name: 'Morning HIIT', description: 'Short high-intensity interval training' },
+        { id: 2, name: 'Strength Builder', description: 'Full-body strength circuit' },
+    ]);
 });
 app.get('/api/leaderboard', (_req, res) => {
-    res.json({
-        baseUrl: apiBaseUrl,
-        leaderboard: [
-            { id: 1, name: 'Ava', score: 940 },
-            { id: 2, name: 'Noah', score: 860 },
-        ],
-    });
+    res.json([
+        { id: 1, name: 'Ava', score: 940 },
+        { id: 2, name: 'Noah', score: 860 },
+    ]);
 });
 mongoose_1.default
     .connect(mongoUri)
